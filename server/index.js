@@ -13,7 +13,7 @@ const port=5000;
 app.use(bodyParser.json({limit:"30mb",extended:true}));//en raison de securité pour eviter les attaques Dos
 app.use(bodyParser.urlencoded({limit:"30mb",extended:true}));//pour lire le corps des requetes
 app.use(cors({
-    origin: "https://social-app-jmm5.vercel.app",
+    origin: "https://social-app-jmm5.vercel.app/",
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
