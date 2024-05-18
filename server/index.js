@@ -15,7 +15,6 @@ app.use(bodyParser.urlencoded({limit:"30mb",extended:true}));//pour lire le corp
 app.use(cors({
     origin: ["https://social-app-jmm5.vercel.app"],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
   }));//pour répondre à des requetes provenant d'autre domaine de celui du serveur d'origine
 
