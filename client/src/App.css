@@ -166,6 +166,9 @@ body{
     height: 40px; 
     border: grey 1px solid;
     transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .paginationButtonActive{
