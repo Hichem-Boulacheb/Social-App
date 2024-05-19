@@ -389,10 +389,10 @@ input{
 }
 .input_with_icon{
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
-.input_with_icon input{
-    width: 96%;
-}
+
 .eyeIcon{
     color: grey;
     position: absolute;
