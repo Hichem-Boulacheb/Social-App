@@ -73,7 +73,7 @@ export default function Memory(props) {
       <div className="memoryDetails">
         <p className="hashtag">{post.tags.map((tag) => `#${tag} `)}</p>
         <h1 className="memoryTitle">{post.title}</h1>
-        <p className="memoryDescription">{post.message}</p>
+        <p className="memoryDescription">{description}</p>
         <div className="memoryLikes">
           <div className="likes">
             <FontAwesomeIcon
