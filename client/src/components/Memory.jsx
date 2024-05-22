@@ -30,7 +30,7 @@ export default function Memory(props) {
       setDescription(props.message);
     }else{
       const messageLimited=props.message.substring(0,130);
-      const lastSpaceIndex=props.messageLimited.lastIndexOf(" ");//to remove the uncompleted words
+      const lastSpaceIndex=messageLimited.lastIndexOf(" ");//to remove the uncompleted words
       setDescription(props.message.substring(0,lastSpaceIndex)+"...");
     }
   },[]);
