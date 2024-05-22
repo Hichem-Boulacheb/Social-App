@@ -26,10 +26,12 @@ export default function Memory(props) {
       }
     }
     isLiked();
-    if(props.message.length<=125){
+    if(props.message.length<=130){
       setDescription(props.message);
     }else{
-      setDescription(props.message.substring(0,125)+"...");
+      const messageLimited=props.message.substring(0,130);
+      const lastSpaceIndex=props.messageLimited.lastIndexOf(" ");//to remove the uncompleted words
+      setDescription(props.message.substring(0,lastSpaceIndex)+"...");
     }
   },[]);
   async function likeMemory() {
