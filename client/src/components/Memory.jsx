@@ -26,10 +26,10 @@ export default function Memory(props) {
       }
     }
     isLiked();
-    if(props.message.length<=152){
+    if(props.message.length<=145){
       setDescription(props.message);
     }else{
-      setDescription(props.message.substring(0,152)+"...");
+      setDescription(props.message.substring(0,145)+"...");
     }
   },[]);
   async function likeMemory() {
