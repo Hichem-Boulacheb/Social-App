@@ -12,6 +12,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 export default function Memory(props) {
   const [liked, setLiked] = useState(false);
   const [post, setPost] = useState(props);
+  const [description, setDescription] = useState(false);
   const navigate=useNavigate();
 
   const style1 = {
@@ -25,6 +26,11 @@ export default function Memory(props) {
       }
     }
     isLiked();
+    if(props.message.length<=152){
+      setDescription(props.message);
+    }else{
+      setDescription(props.message.substring(0,152)+"...");
+    }
   },[]);
   async function likeMemory() {
       try {
