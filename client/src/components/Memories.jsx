@@ -14,7 +14,7 @@ export default function Memories(props) {
   const query=useQuery();
   const [currentPage,setCurrentPage] = useState(query.get("page") || 1);
   const [numberOfPages,setNumberOfPages] = useState(0);
-  const [isLoading,setIsLoading] = useState(true);
+  const [isLoading,setIsLoading] = useState(false);
   const searchQuery=query.get("searchQuery");
   const tagsQuery=query.get("tags");
   const navigate=useNavigate();
@@ -23,18 +23,18 @@ export default function Memories(props) {
   }
   useEffect(() => {
     async function fetchPosts() {
+      setIsLoading(true);
       try {
         if(searchQuery ||tagsQuery){
           const response=await axiosInstance.get(`/posts/search?searchQuery=${searchQuery || "none"}&tags=${tagsQuery}`);
           props.setPosts(response.data);
-          setIsLoading(false);
         }else{
           navigate("/posts?page="+currentPage)
           const response=await axiosInstance.get(`/posts?page=${currentPage}`);
           props.setPosts(response.data.postMessages); 
           setNumberOfPages(response.data.numberOfPages);
-          setIsLoading(false);
         }
+        setIsLoading(false);
       } catch (error) {
         console.log(error.message);
       }
