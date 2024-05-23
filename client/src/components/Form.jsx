@@ -3,12 +3,12 @@ import axiosInstance from "../api/axiosInstance";
 import FileBase from "react-file-base64";
 import { useNavigate,useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faXmark} from "@fortawesome/free-solid-svg-icons"
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import { ClipLoader } from "react-spinners";
 
 
 export default function Form(props) {
   const navigate=useNavigate();
-
   const [search, setSearch] = useState({
     Memories: "",
     Tags: "",
@@ -39,6 +39,7 @@ export default function Form(props) {
     if(search.Memories.trim() || tags.length!=0){
       try {
         navigate(`/posts/search?searchQuery=${search.Memories || ""}&tags=${tags.join(",")}`);
+        props.loading(true);
         const response=await axiosInstance.get(`/posts/search?searchQuery=${search.Memories || "none"}&tags=${tags.join(",")}`);
         setSearch({
           Memories: "",
@@ -46,6 +47,7 @@ export default function Form(props) {
         });
         setTags([]);
         props.setPosts(response.data)
+        props.loading(false);
       } catch (error) {
         console.log(error.message);
       }
@@ -59,6 +61,7 @@ export default function Form(props) {
   async function handleSubmit(event) {
     event.preventDefault();
     const name=JSON.parse(localStorage.getItem("profile"))?.userName;
+    props.loading(true);
     if(name){
       try {
         await axiosInstance.post ("/posts",{...memory,name:name})
@@ -69,6 +72,7 @@ export default function Form(props) {
     }else{
       navigate("/auth")
     }
+    props.loading(false);
   }
   function clearAll(event) {
     event.preventDefault();

@@ -14,7 +14,6 @@ export default function Memories(props) {
   const query=useQuery();
   const [currentPage,setCurrentPage] = useState(query.get("page") || 1);
   const [numberOfPages,setNumberOfPages] = useState(0);
-  const [isLoading,setIsLoading] = useState(false);
   const searchQuery=query.get("searchQuery");
   const tagsQuery=query.get("tags");
   const navigate=useNavigate();
@@ -23,7 +22,7 @@ export default function Memories(props) {
   }
   useEffect(() => {
     async function fetchPosts() {
-      setIsLoading(true);
+      props.loading(true);
       try {
         if(searchQuery ||tagsQuery){
           const response=await axiosInstance.get(`/posts/search?searchQuery=${searchQuery || "none"}&tags=${tagsQuery}`);
@@ -34,7 +33,7 @@ export default function Memories(props) {
           props.setPosts(response.data.postMessages); 
           setNumberOfPages(response.data.numberOfPages);
         }
-        setIsLoading(false);
+      props.loading(false);
       } catch (error) {
         console.log(error.message);
       }
@@ -53,7 +52,7 @@ export default function Memories(props) {
   return (
     <div className="MemoriesWithTab">
       <div className="MemoriesContainer">
-        {isLoading ? <ClipLoader color="blue" size="40"  /> :props.posts.map((post) => (
+        {props.isLoading ? <ClipLoader color="blue" size="40"  /> :props.posts.map((post) => (
           <Memory
             key={post._id}
             id={post._id}
@@ -69,7 +68,7 @@ export default function Memories(props) {
           />
         ))}
       </div>
-      {!searchQuery && !tagsQuery && numberOfPages>1 && !isLoading && <PaginationTab currentPage={currentPage} changePage={changePage} numberOfPages={numberOfPages} />}
+      {!searchQuery && !tagsQuery && numberOfPages>1 && !props.isLoading && <PaginationTab currentPage={currentPage} changePage={changePage} numberOfPages={numberOfPages} />}
       
     </div>
   );
