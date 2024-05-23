@@ -69,7 +69,7 @@ export default function Memories(props) {
           />
         ))}
       </div>
-      {!searchQuery && !tagsQuery && numberOfPages>1 && <PaginationTab currentPage={currentPage} changePage={changePage} numberOfPages={numberOfPages} />}
+      {!searchQuery && !tagsQuery && numberOfPages>1 && !isLoading && <PaginationTab currentPage={currentPage} changePage={changePage} numberOfPages={numberOfPages} />}
       
     </div>
   );
