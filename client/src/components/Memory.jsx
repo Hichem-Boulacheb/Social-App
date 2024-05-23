@@ -8,10 +8,12 @@ import {
 import axiosInstance from "../api/axiosInstance";
 import moment from "moment";
 import { Navigate, useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 export default function Memory(props) {
   const [liked, setLiked] = useState(false);
   const [post, setPost] = useState(props);
+  const [isLoading, setIsLoading] = useState(false);
   const [description, setDescription] = useState(false);
   const navigate=useNavigate();
 
@@ -36,6 +38,7 @@ export default function Memory(props) {
   },[]);
   async function likeMemory() {
       try {
+        setIsLoading(true);
         const response=await axiosInstance.patch("/posts/"+props.id+"/likePost");
         if(response.data?.message!="unauthenticated"){
           setPost(response.data);
@@ -43,18 +46,21 @@ export default function Memory(props) {
         }else{
           navigate("/auth")
         }
+        setIsLoading(false);
       } catch (error) {
         console.log(error.message)
       }     
   }
   async function deleteMemory() {
     try {
+      setIsLoading(true);
       const response=await axiosInstance.delete("/posts/"+props.id);
       if(response.data?.message=="unauthenticated"){
         navigate("/auth")
       }else{
         window.location.reload();
       }
+      setIsLoading(false);
     } catch (error) {
       console.log(error.message);
     }   
@@ -85,6 +91,7 @@ export default function Memory(props) {
               style={liked && style1}
             />
             <p>{post.likes.length} Like</p>
+            {isLoading && <ClipLoader color="blue" size={20} />}
           </div>
           {props.creatorId==props.userId && 
           <FontAwesomeIcon
